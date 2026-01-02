@@ -17,28 +17,28 @@ PACKAGES="$PACKAGES luci-i18n-diskman-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-package-manager-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-firewall-zh-cn"
 # 服务——FileBrowser 用户名admin 密码admin
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-filebrowser-
+# PACKAGES#PACKAGES#PACKAGES="$PACKAGES luci-i18n-fil
 PACKAGES="$PACKAGES luci-theme-argon"
 PACKAGES="$PACKAGES luci-app-argon-config"
 PACKAGES="$PACKAGES luci-i18n-argon-config-zh-cn"
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-tt
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-passwa
-#PACKAGES#PACKAGES="$PACKAGES luci-app-o
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-homepro
+PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
+# PACKAGES#PACKAGES#PACKAGES="$PACKAGES l
+# PACKAGES#PACKAGES#PACKAGES="$PACKAGES luci-i18
 PACKAGES="$PACKAGES openssh-sftp-server"
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-samb
+# PACKAGES#PACKAGES#PACKAGES="$PACKAGES luci-
 # 文件管理器
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-filemanag
+# PACKAGES#PACKAGES#PACKAGES="$PACKAGES luci-i18n-
 # 静态文件服务器dufs(推荐)
-#PACKAGES#PACKAGES="$PACKAGES luci-i18n-du
+PACKAGES="$PACKAGES luci-i18n-dufs-zh-cn"
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
     PACKAGES="$PACKAGES luci-i18n-dockerman-zh-cn"
     echo "✅ 已选择docker : luci-i18n-dockerman-zh-cn"
 fi
 # 斐讯N1 无线
-PACKAGES#PACKAGES="$PACKAGES kmod-brcmfmac wpad-basic-mbedtls i
-PACKAGES#PACKAGES="$PACKAGES perlbase-base perlbase-file perlbase-time perlbase-utf8 perlbase-
+PACKAGES="$PACKAGES kmod-brcmfmac wpad-basic-mbedtls iw iwinfo"
+PACKAGES="$PACKAGES perlbase-base perlbase-file perlbase-time perlbase-utf8 perlbase-xsloader"
 # 晶晨宝盒（追加第三方必备软件 用于写入emmc 请不要注释）
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-amlogic luci-i18n-amlogic-zh-cn"
 
@@ -59,22 +59,22 @@ arch aarch64_cortex-a53 15' repositories.conf
 
 # ======== shell/custom-packages.sh =======
 # 合并imm仓库以外的第三方插件
-PACKAGES#PACKAGES="$PACKAGES $CUSTOM_
+PACKAGES="$PACKAGES $CUSTOM_PACKAGES"
 
 # 若构建openclash 则添加内核
-#if#if echo "$PACKAGES" | grep -q "luci-app-openclash"; t
-#    echo #    echo "✅ 已选择 luci-app-openclash，添加 openc
-#    mkdir #    mkdir -p files/etc/ope
+if echo "$PACKAGES" | grep -q "luci-app-openclash"; then
+    echo "✅ 已选择 luci-app-openclash，添加 openclash core"
+    mkdir -p files/etc/openclash/core
     # Download clash_meta
- #   META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
-#    wget -qO- $META_URL | tar xOvz > files/etc/openclash/core/clash_meta
- #   chmod +x files/etc/openclash/core/clash_meta
+    META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
+    wget -qO- $META_URL | tar xOvz > files/etc/openclash/core/clash_meta
+    chmod +x files/etc/openclash/core/clash_meta
     # Download GeoIP and GeoSite
- #   wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O files/etc/openclash/GeoIP.dat
-#    wget #    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O files/etc/openclash/G
-#else
-#    echo #    echo "⚪️ 未选择 luci-app-
-#fi
+    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O files/etc/openclash/GeoIP.dat
+    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O files/etc/openclash/GeoSite.dat
+else
+    echo "⚪️ 未选择 luci-app-openclash"
+fi
 
 
 # 构建镜像
