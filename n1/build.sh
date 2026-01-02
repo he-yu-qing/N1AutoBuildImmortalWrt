@@ -59,7 +59,7 @@ arch aarch64_cortex-a53 15' repositories.conf
 
 # ======== shell/custom-packages.sh =======
 # 合并imm仓库以外的第三方插件
-#PACKAGES#PACKAGES="$PACKAGES $CUSTOM_
+PACKAGES#PACKAGES="$PACKAGES $CUSTOM_
 
 # 若构建openclash 则添加内核
 #if#if echo "$PACKAGES" | grep -q "luci-app-openclash"; t
